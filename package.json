@@ -2,6 +2,7 @@
     "name": "@deckweiss/cart",
     "version": "1.0.1",
     "homepage": "https://github.com/deckweiss/cart",
+    "license": "MIT",
     "author": {
         "name": "Alexander Betz",
         "email": "alexander.betz@deckweiss.at"
