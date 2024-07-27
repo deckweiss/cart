@@ -1,6 +1,15 @@
 {
     "name": "@deckweiss/cart",
     "version": "1.0.0",
+    "homepage": "https://github.com/deckweiss/cart",
+    "author": {
+        "name": "Alexander Betz",
+        "email": "alexander.betz@deckweiss.at"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/deckweiss/cart"
+    },
     "scripts": {
         "dev": "vite dev",
         "build": "vite build && npm run package",
