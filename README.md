@@ -1,58 +1,61 @@
-# create-svelte
+# Cart for SvelteKit
+This is a shopping cart implementation for SvelteKit applications at Deckweiss.
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
-
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+## Installation
+### Step 1: Install package
+```sh
+pnpm i @deckweiss/cart
 ```
 
-## Developing
+### Step 2: Initialize cart
+```typescript
+// src/hooks.client.ts
+import { initializeClientCart } from '@deckweiss/cart'
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+initializeClientCart()
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+```typescript
+// src/hooks.server.ts
+import { handle } from '@deckweiss/cart'
 
-## Building
-
-To build your library:
-
-```bash
-npm run package
+export { handle }
 ```
 
-To create a production version of your showcase app:
+### Step 3: Use cart
+```svelte
+<script lang="ts">
+import { cart, addOrAppendToProduct, removeProduct, clearCart } from '@deckweiss/cart'
+</script>
 
-```bash
-npm run build
+<button on:click={() => addOrAppendToProduct('id1', 1)}>Add product 1</button>
+<button on:click={() => addOrAppendToProduct('id2', 1)}>Add product 2</button>
+<button on:click={clearCart}>Clear cart</button>
+
+{#each $cart.products as product}
+    <div>
+        <h3>{product.id}</h3>
+        <p>Amount: {product.amount}</p>
+        <button on:click={() => removeProduct(product.id)}>Remove product</button>
+    </div>
+{:else}
+    <p>Cart is empty</p>
+{/each}
 ```
 
-You can preview the production build with `npm run preview`.
+## Custom metadata with TypeScript
+The types `CartMetaData` and `CartProductMetaData` support to be extended/augmented via TypeScript. This means, your editor will recognize the custom types and give you intellisense.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```typescript
+// src/app.d.ts
+declare module '@deckweiss/cart' {
+    interface CartMetaData {
+        userId?: string
+	note?: string
+	discountCode?: string
+    }
 
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
+    interface CartProductMetaData {
+        type?: 'food' | 'tool' | 'book'
+    }
+}
