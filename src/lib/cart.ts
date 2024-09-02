@@ -83,6 +83,11 @@ export function removeProduct(id: string) {
         _cart.set(cartContent);
     }
 }
+export function removeAllProducts() {
+    const cartContent = get(cart);
+    cartContent.products = [];
+    _cart.set(cartContent);    
+}
 
 function persistCart() {
     const cartContent = get(_cart);

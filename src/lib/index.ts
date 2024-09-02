@@ -11,6 +11,7 @@ import {
     handle,
     initializeClientCart,
     removeProduct,
+    removeAllProducts,
     setCartMetaData,
     setProduct
 } from './cart.js';
@@ -26,6 +27,7 @@ export {
     handle,
     initializeClientCart,
     removeProduct,
+    removeAllProducts,
     setCartMetaData,
     setProduct
 };
