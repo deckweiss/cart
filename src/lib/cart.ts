@@ -81,12 +81,14 @@ export function removeProduct(id: string) {
     if (productIndex >= 0) {
         cartContent.products.splice(productIndex, 1);
         _cart.set(cartContent);
+        persistCart();
     }
 }
 export function removeAllProducts() {
     const cartContent = get(cart);
     cartContent.products = [];
-    _cart.set(cartContent);    
+    _cart.set(cartContent);
+    persistCart();
 }
 
 function persistCart() {
