@@ -16,7 +16,7 @@ export { handle }
 ```
 
 ### Step 3: Initialize useCart()
-´´´typescript
+```typescript
 // +layout.server.ts
 export const load: LayoutServerLoad = function (event) {
     return { cart: event.locals.cart.cart };
