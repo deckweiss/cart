@@ -39,7 +39,7 @@ export const load: LayoutServerLoad = function (event) {
 ### Step 4: Use cart
 ```svelte
 <script lang="ts">
-import useCart from '@deckweiss/cart'
+import { useCart } from '@deckweiss/cart'
 let cart = useCart()
 </script>
 
