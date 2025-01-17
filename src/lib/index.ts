@@ -1,33 +1,7 @@
-import {
-    type Cart,
-    type CartMetaData,
-    type CartProduct,
-    type CartProductMetaData
-} from './types.js';
-import {
-    addOrAppendToProduct,
-    cart,
-    clearCart,
-    handle,
-    initializeClientCart,
-    removeProduct,
-    removeAllProducts,
-    setCartMetaData,
-    setProduct
-} from './cart.js';
+// Reexport your entry components here
 
-export {
-    type Cart,
-    type CartMetaData,
-    type CartProduct,
-    type CartProductMetaData,
-    addOrAppendToProduct,
-    cart,
-    clearCart,
-    handle,
-    initializeClientCart,
-    removeProduct,
-    removeAllProducts,
-    setCartMetaData,
-    setProduct
-};
+import { handle } from './server.svelte.js';
+import { setCartContext, useCart } from './cart.svelte.js';
+import { type CartMetaData, type CartProductMetaData } from './types.js';
+
+export { handle, setCartContext, useCart, type CartMetaData, type CartProductMetaData };

@@ -7,14 +7,7 @@ This is a shopping cart implementation for SvelteKit applications at Deckweiss.
 pnpm i @deckweiss/cart
 ```
 
-### Step 2: Initialize cart
-```typescript
-// src/hooks.client.ts
-import { initializeClientCart } from '@deckweiss/cart'
-
-initializeClientCart()
-```
-
+### Step 2: Add hook
 ```typescript
 // src/hooks.server.ts
 import { handle } from '@deckweiss/cart'
@@ -22,21 +15,43 @@ import { handle } from '@deckweiss/cart'
 export { handle }
 ```
 
-### Step 3: Use cart
+### Step 3: Initialize useCart()
+´´´typescript
+// +layout.server.ts
+export const load: LayoutServerLoad = function (event) {
+    return { cart: event.locals.cart.cart };
+};
+```
+
 ```svelte
+// +layout.svelte
 <script lang="ts">
-import { cart, addOrAppendToProduct, removeProduct, clearCart } from '@deckweiss/cart'
+    import { setCartContext } from '@deckweiss/cart';
+
+    let { data, children } = $props();
+
+    setCartContext(data.cart);
 </script>
 
-<button on:click={() => addOrAppendToProduct('id1', 1)}>Add product 1</button>
-<button on:click={() => addOrAppendToProduct('id2', 1)}>Add product 2</button>
-<button on:click={clearCart}>Clear cart</button>
+{@render children()}
+```
 
-{#each $cart.products as product}
+### Step 4: Use cart
+```svelte
+<script lang="ts">
+import useCart from '@deckweiss/cart'
+let cart = useCart()
+</script>
+
+<button on:click={() => cart.addProduct('id1', 1)}>Add product 1</button>
+<button on:click={() => cart.addProduct('id2', 1)}>Add product 2</button>
+<button on:click={() => cart.clear()}>Clear cart</button>
+
+{#each cart.cart.products as product}
     <div>
         <h3>{product.id}</h3>
         <p>Amount: {product.amount}</p>
-        <button on:click={() => removeProduct(product.id)}>Remove product</button>
+        <button on:click={() => cart.removeProduct(product.id)}>Remove product</button>
     </div>
 {:else}
     <p>Cart is empty</p>
@@ -51,8 +66,8 @@ The types `CartMetaData` and `CartProductMetaData` support to be extended/augmen
 declare module '@deckweiss/cart' {
     interface CartMetaData {
         userId?: string
-	note?: string
-	discountCode?: string
+	    note?: string
+	    discountCode?: string
     }
 
     interface CartProductMetaData {
