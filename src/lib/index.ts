@@ -2,6 +2,19 @@
 
 import { handle } from './server.svelte.js';
 import { setCartContext, useCart } from './cart.svelte.js';
-import { type CartMetaData, type CartProductMetaData } from './types.js';
+import {
+    type CartMetaData,
+    type CartProductMetaData,
+    type CartData,
+    type CartProduct
+} from './types.js';
 
-export { handle, setCartContext, useCart, type CartMetaData, type CartProductMetaData };
+export {
+    handle,
+    setCartContext,
+    useCart,
+    type CartMetaData,
+    type CartProductMetaData,
+    type CartData,
+    type CartProduct
+};
